@@ -72,6 +72,10 @@ function App() {
 		}
 	};
 
+	const handleDeletePayment = (key) => {
+		deletePayment(key);
+	};
+
 	const deletePayment = (key) => {
 		setPayments((currentPayments) => {
 			return currentPayments.filter((payment) => payment.key !== key);
@@ -88,7 +92,7 @@ function App() {
 					<div className="w-full flex flex-row outline-2 outline-white outline rounded-2xl">
 						<p
 							onClick={() => handleToggleCurrency("£")}
-							className={`block w-full text-4xl text-center p-2.5 transition-all duration-200 ease-in-out ${
+							className={`block w-full text-2xl text-center p-2.5 transition-all duration-200 ease-in-out ${
 								selectedCurrency == "£" ? "bg-slate-500" : ""
 							}`}
 						>
@@ -96,7 +100,7 @@ function App() {
 						</p>
 						<p
 							onClick={() => handleToggleCurrency("€")}
-							className={`block w-full text-4xl text-center p-2.5 transition-all duration-200 ease-in-out ${
+							className={`block w-full text-2xl text-center p-2.5 transition-all duration-200 ease-in-out ${
 								selectedCurrency == "€" ? "bg-slate-500" : ""
 							}`}
 						>
@@ -104,7 +108,7 @@ function App() {
 						</p>
 					</div>
 					<input
-						className="text-4xl w-full outline-2 outline-white outline rounded-2xl text-white bg-slate-700 p-2.5"
+						className="text-2xl w-full outline-2 outline-white outline rounded-2xl text-white bg-slate-700 p-2.5"
 						placeholder="0.00"
 						value={inputAmount}
 						onChange={(e) => handleSetInputAmount(e.target.value)}
@@ -114,19 +118,27 @@ function App() {
 							onClick={() =>
 								toggleCategoryDropdown(!categoryDropdownShow)
 							}
-							className="text-4xl text-center w-full outline-2 outline-white outline rounded-2xl text-white bg-slate-700 p-2.5 z-0 relative"
+							className="text-2xl text-center w-full outline-2 outline-white outline rounded-2xl text-white bg-slate-700 p-2.5 z-0 relative"
 						>
 							{selectedCategory}
 							<span
-								className={`absolute right-2 transition-all duration-300 ease-in-out ${
+								className={`absolute right-2 top-1 transition-all duration-300 ease-in-out ${
 									categoryDropdownShow ? "rotate-180" : ""
 								}`}
 							>
-								⮟
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="48"
+									height="48"
+									fill="white"
+									viewBox="0 -960 960 960"
+								>
+									<path d="M480-360 280-559h400L480-360Z" />
+								</svg>
 							</span>
 						</h2>
 						{categoryDropdownShow && (
-							<div className="text-4xl text-center w-full outline-2 outline-white outline rounded-2xl text-white bg-slate-700 z-10 absolute top-[125%] max-h-96 overflow-y-auto">
+							<div className="text-2xl text-center w-full outline-2 outline-white outline rounded-2xl text-white bg-slate-700 z-10 absolute top-[125%] max-h-96 overflow-y-auto">
 								{data.cateogories.map((category) => {
 									return (
 										<p
@@ -136,7 +148,7 @@ function App() {
 													category.name
 												)
 											}
-											className={`text-4xl text-center w-full p-2.5 relative ${
+											className={`text-2xl text-center w-full p-2.5 relative ${
 												selectedCategory ==
 												category.name
 													? "bg-slate-500"
@@ -153,7 +165,7 @@ function App() {
 							</div>
 						)}
 					</div>
-					<div className="text-4xl text-center w-full outline-2 outline-white outline rounded-2xl text-white bg-slate-700 p-2.5 z-0 flex flex-row justify-evenly">
+					<div className="text-2xl text-center w-full outline-2 outline-white outline rounded-2xl text-white bg-slate-700 p-2.5 z-0 flex flex-row justify-evenly">
 						<h2
 							onClick={() =>
 								handleSetSelectedWeek(selectedWeek - 1)
@@ -182,7 +194,7 @@ function App() {
 					</div>
 					<button
 						onClick={() => addPayment()}
-						className={`text-4xl w-full outline-2 outline-white outline rounded-2xl text-white bg-slate-700 p-2.5 ${
+						className={`text-2xl w-full outline-2 outline-white outline rounded-2xl text-white bg-slate-700 p-2.5 ${
 							inputAmount == ""
 								? "opacity-75 pointer-events-none"
 								: ""
@@ -194,77 +206,56 @@ function App() {
 			</header>
 			<main className="flex flex-col mt-8">
 				<header className="px-4 py-2 border-b-2">
-					<h2 className="ml-2 text-4xl text-center">Payments</h2>
+					<h2 className="ml-2 text-2xl text-center">Payments</h2>
 				</header>
-				<div className="overflow-y-scroll">
-					<div className="flex flex-row p-2 items-start text-center text-3xl bg-slate-600 sticky top-0">
-						<h2 className="w-6/12 p-2.5 text-left">Catetogry</h2>
-						<h2 className="w-6/12 p-2.5 text-right">Amount</h2>
-						<div className="absolute left-2/4 translate-x-[-50%]">
-							<h2
-								onClick={() =>
-									togglePaymentsEdit(!paymentsEdit)
-								}
-								className="w-full p-2.5 text-center bg-blue-400 rounded-lg"
-							>
-								{paymentsEdit ? "Cancel" : "Edit"}
-							</h2>
-						</div>
+				<div className="mb-20">
+					<div className="flex flex-row p-2 items-start text-center text-2xl bg-slate-600 sticky top-0 z-50">
+						<h2 className="w-6/12 p-2.5 text-left">Category</h2>
+						<h2 className="w-4/12 p-2.5 text-right">Amount</h2>
+						<div className="w-2/12 p-2.5 text-center"></div>
 					</div>
 					<div className="flex flex-col-reverse">
 						{data.payments.map((payment) => {
-							var loops = 0;
 							if (payment.week == selectedWeek) {
 								return (
 									<div
 										key={payment.key}
-										className="flex flex-row items-start text-left text-3xl p-2 border-b first-of-type:border-b-0"
+										onClick={() =>
+											togglePaymentsEdit(!paymentsEdit)
+										}
+										className="flex flex-row items-start text-left text-2xl p-2 border-b first-of-type:border-b-0"
 									>
 										<h2 className="w-6/12 p-2.5">
 											{payment.category}
 										</h2>
-										<h2 className="w-6/12 p-2.5 text-right">
+										<h2 className="w-4/12 p-2.5 text-right">
 											{payment.currency}
 											{payment.amount}
 										</h2>
-										<div
-											className={`w-2/12 absolute left-2/4 translate-x-[-50%] ${
-												paymentsEdit ? "" : "hidden"
-											}`}
-										>
+										<div className="w-2/12 p-2.5 text-center">
 											<h2
 												onClick={() =>
-													deletePayment(payment.key)
+													handleDeletePayment(
+														payment.key
+													)
 												}
-												className="w-full p-2.5 text-center bg-red-500 rounded-lg"
+												className="w-full text-center text-red-500 rounded-lg"
 											>
-												Delete
+												Del
 											</h2>
 										</div>
 									</div>
 								);
-							} else {
-								loops = loops + 1;
-								console.log(loops);
-							}
-							if (loops == data.payments.length) {
-								return (
-									<h2 className="text-4xl text-center opacity-75 mt-5">
-										No Payments
-									</h2>
-								);
 							}
 						})}
-						{data.payments.length === 0 && (
-							<h2 className="text-4xl text-center opacity-75 mt-5">
-								No Payments
-							</h2>
-						)}
+						<h2 className="text-2xl text-center opacity-75 mt-5 hidden only:block">
+							No Payments
+						</h2>
 					</div>
 				</div>
 			</main>
-			<footer className="">
-				<div className="flex flex-row text-center text-3xl p-2.5 fixed bottom-0 left-0 w-full bg-slate-500">
+			<footer>
+				<div className="flex flex-row text-center text-2xl p-2.5 fixed bottom-0 left-0 w-full bg-slate-500">
 					<div className="w-full p-2 bg-slate-600">Home</div>
 					<div className="w-full p-2">Stats</div>
 					<div className="w-full p-2">Settings</div>
