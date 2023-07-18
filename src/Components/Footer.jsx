@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { SVGHome, SVGDollar, SVGBarChart, SVGCog } from "../Icons/index.js";
 
-function Footer({ setPage, page }) {
-	const navBtn =
-		"p-2.5 block hover:bg-slate-500 flex flex-row justify-center";
-	const disableBtn = "bg-slate-400 pointer-events-none";
+function Footer({ setPage }) {
+	const navBtn = "p-2.5 block flex flex-row justify-center";
+	const disableBtn = "bg-slate-400 pointer-events-none select-none";
 	const svgFill = "white";
+	const svgSize = "36";
 	const [selected, updatePage] = useState("Home");
 
 	const handleUpdatePage = (e) => {
@@ -22,7 +22,7 @@ function Footer({ setPage, page }) {
 					}`}
 					onClick={() => handleUpdatePage("Home")}
 				>
-					<SVGHome fill={svgFill} />
+					<SVGHome fill={svgFill} size={svgSize} />
 				</p>
 			</div>
 			<div className="w-full">
@@ -32,7 +32,7 @@ function Footer({ setPage, page }) {
 					}`}
 					onClick={() => handleUpdatePage("Payments")}
 				>
-					<SVGDollar fill={svgFill} />
+					<SVGDollar fill={svgFill} size={svgSize} />
 				</p>
 			</div>
 			<div className="w-full">
@@ -42,7 +42,7 @@ function Footer({ setPage, page }) {
 					}`}
 					onClick={() => handleUpdatePage("Stats")}
 				>
-					<SVGBarChart fill={svgFill} />
+					<SVGBarChart fill={svgFill} size={svgSize} />
 				</p>
 			</div>
 			<div className="w-full">
@@ -52,7 +52,7 @@ function Footer({ setPage, page }) {
 					}`}
 					onClick={() => handleUpdatePage("Options")}
 				>
-					<SVGCog fill={svgFill} />
+					<SVGCog fill={svgFill} size={svgSize} />
 				</p>
 			</div>
 		</div>

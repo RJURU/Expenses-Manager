@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../index.css";
 import { AddCategories, Footer } from "../Components/index.js";
 
-function Options() {
+function Options({ setStartYear }) {
 	return (
 		<>
 			<AddCategories />
