@@ -3,15 +3,12 @@ import "../index.css";
 import { v4 as uuidv4 } from "uuid";
 import { Footer } from "../Components/index.js";
 
-function Stats() {
+function Payments() {
 	return (
 		<>
-			<header className="bg-slate-500 text-white">
-				Hello World from Stats
-			</header>
-			<Footer Page="Stats" />
+			<p>Payemtns Page</p>
 		</>
 	);
 }
 
-export default Stats;
+export default Payments;
