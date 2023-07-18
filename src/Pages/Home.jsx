@@ -1,53 +1,20 @@
 import React, { useState, useEffect } from "react";
-import {
-	SVGLeftArrowKey,
-	SVGRightArrowKey,
-	SVGEuro,
-	SVGGBP,
-} from "../Icons/index.js";
+import { SVGEuro, SVGGBP } from "../Icons/index.js";
+import { WeekSelector } from "../Components/index.js";
 
 function Home({ data }) {
 	const svgFill = "white";
 	const svgSize = "100%";
-	const [categories] = useState(() => {
-		const storedCategories = localStorage.getItem(
-			"RJ_Expenses_Manager_Categories"
-		);
-		if (storedCategories == null || storedCategories == []) return [];
-		return JSON.parse(storedCategories);
-	});
 
 	const [amount, setAmount] = useState("");
 	const [fixedAmount, setFixedAmount] = useState("");
 
 	const [currency, setCurrency] = useState("£");
-
-	const handleSetAmount = (e) => {
-		let fix = parseFloat(e).toFixed(2);
-		setAmount(e);
-		setFixedAmount(fix);
-	};
-
-	const [selectedWeek, setSelectedWeek] = useState(data[0].weeks.length - 1);
-	const [selectedWeekPos, setSelectedWeekPos] = useState("Newest");
+	const [selectedWeek, setSelectedWeek] = useState(data.weeks.length - 1);
 
 	useEffect(() => {
-		if (selectedWeek == data[0].weeks.length - 1) {
-			setSelectedWeekPos("Newest");
-		} else if (selectedWeek == 0) {
-			setSelectedWeekPos("Oldest");
-		} else {
-			setSelectedWeekPos("");
-		}
-	}, [selectedWeek]);
-
-	const handleChangeWeek = (e) => {
-		if (e == "Add" && e !== data[0].weeks.length - 1) {
-			setSelectedWeek(selectedWeek + 1);
-		} else if (e == "Minus" && selectedWeek !== 0) {
-			setSelectedWeek(selectedWeek - 1);
-		} else return;
-	};
+		setFixedAmount(parseFloat(amount).toFixed(2));
+	}, [amount]);
 
 	return (
 		<div className="h-[calc(100%-7rem)] flex flex-col justify-center">
@@ -77,39 +44,15 @@ function Home({ data }) {
 					</div>
 					<input
 						placeholder="0.00"
+						type="number"
+						step="0.01"
+						min="0.01"
 						value={amount}
-						onChange={(e) => handleSetAmount(e.target.value)}
-						className="border w-full text-sm rounded-lg block p-2.5 bg-gray-700 border-gray-100 placeholder-gray-400 text-white"
+						onChange={(e) => setAmount(e.target.value)}
+						className="border h-12 text-lg w-full rounded-lg block p-2.5 bg-gray-700 border-gray-100 placeholder-gray-400 text-white"
 					/>
 				</div>
-				<div className="border text-sm rounded-lg p-2.5 bg-gray-700 border-gray-100 placeholder-gray-400 text-white flex flex-row justify-between relative">
-					<p
-						onClick={() => handleChangeWeek("Minus")}
-						className={`${
-							selectedWeekPos == "Oldest"
-								? "opacity-60 select-none pointer-events-none"
-								: ""
-						}`}
-					>
-						<SVGLeftArrowKey fill={svgFill} size={"24"} />
-					</p>
-					<p className="text-center text-base font-bold">
-						{data[0].weeks[selectedWeek].week}
-					</p>
-					<p
-						onClick={() => handleChangeWeek("Add")}
-						className={`${
-							selectedWeekPos == "Newest"
-								? "opacity-60 select-none pointer-events-none"
-								: ""
-						}`}
-					>
-						<SVGRightArrowKey fill={svgFill} size={"24"} />
-					</p>
-					<div className="absolute bottom-[-3px] left-[50%] translate-x-[-50%] text-[0.7rem] opacity-60">
-						{`${data[0].weeks[selectedWeek].beg} - ${data[0].weeks[selectedWeek].end}`}
-					</div>
-				</div>
+				<WeekSelector data={data} setSelectedWeek={setSelectedWeek} />
 			</div>
 		</div>
 	);

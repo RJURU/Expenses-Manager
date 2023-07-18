@@ -1,12 +1,13 @@
 import { useState } from "react";
-import "../index.css";
-import { v4 as uuidv4 } from "uuid";
-import { Footer } from "../Components/index.js";
+import { WeekSelector } from "../Components/index.js";
 
-function Payments() {
+function Payments({ data }) {
+	const [selectedWeek, setSelectedWeek] = useState(data.weeks.length - 1);
 	return (
 		<>
-			<p>Payemtns Page</p>
+			<div className="w-10/12 mx-auto">
+				<WeekSelector data={data} setSelectedWeek={setSelectedWeek} />
+			</div>
 		</>
 	);
 }

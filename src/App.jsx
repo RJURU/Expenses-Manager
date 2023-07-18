@@ -52,23 +52,42 @@ function App() {
 		const weeks = buildWeeks(from, to);
 		return weeks;
 	});
-	const [data, updateData] = useState([{ weeks: weeks }]);
+	const [categories, setCategories] = useState({
+		groups: [],
+		categories: [],
+	});
+	const [data, updateData] = useState(() => {
+		const storedData = localStorage.getItem("RJ_Expenses_Manager_Data");
+		if (storedData == null || storedData == {})
+			return { weeks: weeks, categories: categories };
+		return JSON.parse(storedData);
+	});
+
 	useEffect(() => {
-		let dataNew = [
-			{
-				weeks: weeks,
-			},
-		];
+		let dataNew = {
+			weeks: weeks,
+			categories: categories,
+		};
 		updateData(dataNew);
-	}, [weeks]);
+	}, [weeks, categories]);
+
+	useEffect(() => {
+		localStorage.setItem("RJ_Expenses_Manager_Data", JSON.stringify(data));
+	}, [data]);
 
 	return (
 		<>
 			<Header header={page} />
 			{page == "Home" && <Home data={data} />}
-			{page == "Payments" && <Payments />}
-			{page == "Stats" && <Stats />}
-			{page == "Options" && <Options setStartYear={setStartYear} />}
+			{page == "Payments" && <Payments data={data} />}
+			{page == "Stats" && <Stats data={data} />}
+			{page == "Options" && (
+				<Options
+					setStartYear={setStartYear}
+					setCategories={setCategories}
+					data={data}
+				/>
+			)}
 			<Footer setPage={setPage} />
 		</>
 	);

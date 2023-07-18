@@ -1,11 +1,10 @@
 import { useState } from "react";
-import "../index.css";
 import { AddCategories, Footer } from "../Components/index.js";
 
-function Options({ setStartYear }) {
+function Options({ setStartYear, data, setCategories }) {
 	return (
 		<>
-			<AddCategories />
+			<AddCategories data={data} setCategories={setCategories} />
 		</>
 	);
 }
