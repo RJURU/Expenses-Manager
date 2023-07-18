@@ -1,14 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,html}"],
 	theme: {
-		screens: {
-			sm: "600px",
-			md: "900px",
-			xl: "1200px",
-			"2xl": "1400px",
-		},
 		extend: {
+			height: {
+				"screen-s": "100svh",
+			},
 			fontFamily: {
 				poppins: ["Poppins", "sans-serif"],
 			},
