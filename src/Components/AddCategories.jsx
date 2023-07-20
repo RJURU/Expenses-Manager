@@ -1,116 +1,278 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { SVGClose } from "../Icons";
+import { ConfirmationPopUp } from "./";
 
 function AddCategories({ data, setCategories }) {
-	const [categoryGroup, setCategoryGroup] = useState("");
-	const [subCategory, setSubCategory] = useState("");
-	const [subCategories, setSubCategories] = useState(
-		data.categories.categories
-	);
-	const [categoryGroups, setCategoryGroups] = useState(
-		data.categories.groups
-	);
+    const [categoryGroup, setCategoryGroup] = useState("");
+    const [subCategory, setSubCategory] = useState("");
+    const [subCategories, setSubCategories] = useState(
+        data.categories.categories,
+    );
+    const [categoryGroups, setCategoryGroups] = useState(
+        data.categories.groups,
+    );
+    const [edit, toggleEdit] = useState(false);
+    const [showDelete, toggleShowDelete] = useState(false);
+    const [deleteMessage, setDeleteMessage] = useState();
+    const [operation, setOperation] = useState();
+    const [deleteKey, setDeleteKey] = useState();
+    const [type, setType] = useState();
 
-	const handleAddCategory = (group, category) => {
-		var groupExists = false;
-		var i;
-		for (i = 0; i < data.categories.groups.length; i++) {
-			if (data.categories.groups[i].name === group) {
-				groupExists = true;
-			}
-		}
-		console.log(groupExists);
-		if (groupExists) {
-			console.log("exists");
-			handleAddSubCategory(category, group);
-		} else {
-			console.log("Notexists");
-			handleAddCategoryGroup(group);
-			handleAddSubCategory(category, group);
-		}
-	};
+    const handleDelete = (key, type) => {
+        if (type == "group") {
+            deleteCategoryGroup(key);
+        } else if (type == "category") {
+            deleteSubCategory(key);
+        }
+        toggleShowDelete(false);
+        setDeleteKey();
+        setType();
+        setOperation();
+        setDeleteMessage();
+    };
 
-	useEffect(() => {
-		setCategories({ groups: categoryGroups, categories: subCategories });
-	}, [categoryGroups, subCategories]);
+    const handleSetDelete = (key, message, type) => {
+        setDeleteKey(key);
+        setType(type);
+        setOperation("delete");
+        setDeleteMessage(`Confirming will delete ${message}. Are you sure?`);
+        if (type == "group") {
+            setDeleteMessage(
+                `Confirming will delete ${message}. Categories will be preserved under the group name, and will be there if you re-add the group. Are you sure?`,
+            );
+        }
+        toggleShowDelete(true);
+    };
 
-	const handleAddCategoryGroup = (groupName) => {
-		if (categoryGroup !== "" || categoryGroup !== null) {
-			setCategoryGroups((currentMainCategories) => {
-				return [
-					...currentMainCategories,
-					{ key: uuidv4(), name: groupName },
-				];
-			});
-		}
-		setCategoryGroup("");
-	};
-	const handleAddSubCategory = (categoryName, groupName) => {
-		setSubCategories((currentSubCategories) => {
-			return [
-				...currentSubCategories,
-				{ key: uuidv4(), name: categoryName, group: groupName },
-			];
-		});
-		setSubCategory("");
-	};
-	return (
-		<>
-			<h2 className="text-lg p-2.5 text-center">Group</h2>
-			<div className="w-10/12 mx-auto flex flex-col gap-3">
-				<div className="border h-12 text-lg w-full rounded-lg p-2.5 bg-gray-700 border-gray-100 placeholder-gray-400 text-white flex flex-row">
-					<input
-						className="bg-transparent outline-none w-full"
-						onChange={(e) => setCategoryGroup(e.target.value)}
-						value={categoryGroup}
-					/>
-				</div>
-			</div>
-			<h2 className="text-lg p-2.5 text-center">Category</h2>
-			<div className="w-10/12 mx-auto flex flex-col gap-3">
-				<div className="border h-12 text-lg w-full rounded-lg p-2.5 bg-gray-700 border-gray-100 placeholder-gray-400 text-white flex flex-row">
-					<input
-						className="bg-transparent outline-none w-full"
-						onChange={(e) => setSubCategory(e.target.value)}
-						value={subCategory}
-					/>
-				</div>
-				<div className="w-10/12 mx-auto flex flex-col gap-3 items-center">
-					<p
-						className={`bg-green-400 p-2 rounded-md w-full text-center ${
-							categoryGroup == "" || subCategory == ""
-								? "select-none pointer-events-none opacity-70"
-								: ""
-						}`}
-						onClick={() =>
-							handleAddCategory(
-								categoryGroup.trim(),
-								subCategory.trim()
-							)
-						}
-					>
-						Add
-					</p>
-				</div>
-			</div>
+    const handleAddCategory = (group, category) => {
+        var fixedGroupName = titleCase(group);
+        var fixedCategoryName = titleCase(category);
+        var groupExists = false;
+        var categoryExists = false;
+        for (var i = 0; i < data.categories.groups.length; i++) {
+            if (data.categories.groups[i].name === fixedGroupName) {
+                groupExists = true;
+            }
+        }
+        for (var i = 0; i < data.categories.categories.length; i++) {
+            if (data.categories.categories[i].name === fixedCategoryName) {
+                categoryExists = true;
+            }
+        }
+        if (!groupExists) {
+            handleAddCategoryGroup(fixedGroupName);
+            handleAddSubCategory(fixedCategoryName, fixedGroupName);
+        } else if (!categoryExists) {
+            handleAddSubCategory(fixedCategoryName, fixedGroupName);
+        } else {
+            return;
+        }
+    };
 
-			{categoryGroups.map((group) => {
-				return (
-					<div
-						key={group.key}
-						className="border text-lg w-10/12 mx-auto rounded-lg p-2.5 bg-gray-700 border-gray-100 text-white text-center"
-					>
-						<h2 className="text-xl underline">{group.name}</h2>
-						{subCategories.map((cat) => {
-							if (cat.group == group.name) {
-								return <p key={cat.key}>{cat.name}</p>;
-							}
-						})}
-					</div>
-				);
-			})}
-		</>
-	);
+    useEffect(() => {
+        setCategories({ groups: categoryGroups, categories: subCategories });
+    }, [categoryGroups, subCategories]);
+
+    const handleAddCategoryGroup = (groupName) => {
+        console.log(groupName);
+        if (categoryGroup !== "" || categoryGroup !== null) {
+            setCategoryGroups((currentMainCategories) => {
+                return [
+                    ...currentMainCategories,
+                    { key: uuidv4(), name: groupName },
+                ];
+            });
+        }
+        setCategoryGroup("");
+    };
+    const handleAddSubCategory = (categoryName, groupName) => {
+        console.log(categoryName);
+        console.log(groupName);
+        setSubCategories((currentSubCategories) => {
+            return [
+                ...currentSubCategories,
+                {
+                    key: uuidv4(),
+                    name: categoryName,
+                    group: groupName,
+                },
+            ];
+        });
+        setSubCategory("");
+    };
+
+    function titleCase(str) {
+        var splitStr = str.split(" ");
+        for (var i = 0; i < splitStr.length; i++) {
+            if (splitStr[i].charAt(0) == "(") {
+                splitStr[i].toLowerCase().trim();
+                splitStr[i] =
+                    splitStr[i].charAt(0) +
+                    splitStr[i].charAt(1).toUpperCase() +
+                    splitStr[i].substring(2);
+            } else if (splitStr[i].charAt(0) == ".") {
+                splitStr[i].trim();
+                splitStr[i] = splitStr[i].charAt(1) + splitStr[i].substring(2);
+            } else {
+                splitStr[i].toLowerCase().trim();
+                splitStr[i] =
+                    splitStr[i].charAt(0).toUpperCase() +
+                    splitStr[i].substring(1);
+            }
+        }
+        return splitStr.join(" ");
+    }
+
+    const deleteSubCategory = (key) => {
+        setSubCategories((currentSubCategories) => {
+            return currentSubCategories.filter(
+                (category) => category.key !== key,
+            );
+        });
+    };
+    const deleteCategoryGroup = (key) => {
+        setCategoryGroups((currentCategoryGroups) => {
+            return currentCategoryGroups.filter((group) => group.key !== key);
+        });
+    };
+    useEffect(() => {
+        if (categoryGroups.length < 1) {
+            toggleEdit(false);
+        }
+    }, [categoryGroups]);
+    return (
+        <>
+            <h2 className="p-2.5 pt-0 text-center text-lg">Group</h2>
+            <div className="mx-auto flex w-10/12 flex-col gap-3">
+                <div className="flex h-12 w-full flex-row rounded-lg border border-gray-100 bg-gray-700 p-2.5 text-lg text-white placeholder-gray-400">
+                    <input
+                        className="w-full bg-transparent outline-none"
+                        onChange={(e) => setCategoryGroup(e.target.value)}
+                        value={categoryGroup}
+                    />
+                </div>
+            </div>
+            <h2 className="p-2.5 text-center text-lg">Category</h2>
+            <div className="mx-auto flex w-10/12 flex-col gap-3">
+                <div className="flex h-12 w-full flex-row rounded-lg border border-gray-100 bg-gray-700 p-2.5 text-lg text-white placeholder-gray-400">
+                    <input
+                        className="w-full bg-transparent outline-none"
+                        onChange={(e) => setSubCategory(e.target.value)}
+                        value={subCategory}
+                    />
+                </div>
+                <p className="mx-auto w-11/12 select-none rounded-sm bg-gray-500 p-1 text-center text-tiny opacity-40">
+                    Start name with a ' . ' to preserve capitalization
+                </p>
+                <div className="mx-auto flex w-10/12 flex-col items-center gap-3">
+                    <p
+                        className={`w-full rounded-md bg-green-400 p-2 text-center ${
+                            categoryGroup == "" || subCategory == ""
+                                ? "pointer-events-none select-none opacity-70"
+                                : ""
+                        }`}
+                        onClick={() =>
+                            handleAddCategory(categoryGroup, subCategory)
+                        }
+                    >
+                        Add
+                    </p>
+                </div>
+                <div className="mx-auto flex w-10/12 flex-col items-center gap-3">
+                    <p
+                        className={`w-full rounded-md bg-blue-400 p-2 text-center ${
+                            categoryGroups.length < 1
+                                ? "pointer-events-none opacity-50"
+                                : ""
+                        }`}
+                        onClick={() => toggleEdit(!edit)}
+                    >
+                        {edit ? "Cancel" : "Remove"}
+                    </p>
+                </div>
+            </div>
+            <div className="mt-6 flex flex-col gap-3">
+                {categoryGroups.map((group) => {
+                    return (
+                        <div
+                            key={group.key}
+                            className="mx-auto w-10/12 rounded-lg border border-gray-100 bg-gray-700 p-2.5 text-center text-lg text-white"
+                        >
+                            <h2 className="relative border-b-2 text-xl outline-none">
+                                {group.name}
+                                {edit && (
+                                    <>
+                                        <span
+                                            className="absolute right-3 top-[10px] block h-fit w-fit translate-y-[-50%] rounded-md bg-red-400"
+                                            onClick={() =>
+                                                handleSetDelete(
+                                                    group.key,
+                                                    group.name + " group",
+                                                    "group",
+                                                )
+                                            }
+                                        >
+                                            <SVGClose
+                                                fill={"white"}
+                                                size={"24"}
+                                            />
+                                        </span>
+                                    </>
+                                )}
+                            </h2>
+                            <div className="mt-2 flex flex-col gap-2">
+                                {subCategories.map((cat) => {
+                                    if (cat.group == group.name) {
+                                        return (
+                                            <div key={cat.key}>
+                                                <p className="relative rounded-md bg-gray-600 p-1 outline-none">
+                                                    {cat.name}
+                                                    {edit && (
+                                                        <>
+                                                            <span
+                                                                className="absolute right-3 top-1/2 block h-fit w-fit translate-y-[-50%] rounded-md bg-red-400"
+                                                                onClick={() =>
+                                                                    handleSetDelete(
+                                                                        cat.key,
+                                                                        cat.name +
+                                                                            " category from the " +
+                                                                            group.name +
+                                                                            " group",
+                                                                        "category",
+                                                                    )
+                                                                }
+                                                            >
+                                                                <SVGClose
+                                                                    fill={
+                                                                        "white"
+                                                                    }
+                                                                    size={"24"}
+                                                                />
+                                                            </span>
+                                                        </>
+                                                    )}
+                                                </p>
+                                            </div>
+                                        );
+                                    }
+                                })}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+            <ConfirmationPopUp
+                showPopUP={showDelete}
+                toggleShowPopUp={toggleShowDelete}
+                targetKey={deleteKey}
+                func={handleDelete}
+                type={type}
+                message={deleteMessage}
+                opperation={operation}
+            />
+        </>
+    );
 }
 
 export default AddCategories;

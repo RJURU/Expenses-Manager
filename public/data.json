@@ -1,0 +1,242 @@
+{
+    "weeks": [
+        {
+            "key": "0acd5d08-25fb-4344-a782-eb8e08bce602",
+            "week": "Week 1",
+            "beg": "03/04/2023",
+            "end": "09/04/2023"
+        },
+        {
+            "key": "f6d60282-c849-4981-913b-ccba1d326ad8",
+            "week": "Week 2",
+            "beg": "10/04/2023",
+            "end": "16/04/2023"
+        },
+        {
+            "key": "05ef3141-9fa5-4d2c-9cbe-41371b0845bd",
+            "week": "Week 3",
+            "beg": "17/04/2023",
+            "end": "23/04/2023"
+        },
+        {
+            "key": "abb30499-bdd0-4a6d-8b03-df14534928a4",
+            "week": "Week 4",
+            "beg": "24/04/2023",
+            "end": "30/04/2023"
+        },
+        {
+            "key": "6e0d41e1-e827-4e1c-bdb1-173a03fb9bf3",
+            "week": "Week 5",
+            "beg": "01/05/2023",
+            "end": "07/05/2023"
+        },
+        {
+            "key": "14048ed3-4918-484e-a5f7-bbbd5b05ccfe",
+            "week": "Week 6",
+            "beg": "08/05/2023",
+            "end": "14/05/2023"
+        },
+        {
+            "key": "a0ef6b8d-3dd0-4875-a49b-ccc9138ea042",
+            "week": "Week 7",
+            "beg": "15/05/2023",
+            "end": "21/05/2023"
+        },
+        {
+            "key": "de631fd1-435d-4649-a15d-5d44bea7fe1c",
+            "week": "Week 8",
+            "beg": "22/05/2023",
+            "end": "28/05/2023"
+        },
+        {
+            "key": "09ec02a3-b2de-4919-98ce-931e20af57fa",
+            "week": "Week 9",
+            "beg": "29/05/2023",
+            "end": "04/06/2023"
+        },
+        {
+            "key": "084d1a4c-fa4d-4e62-bbc2-f1d8c931da21",
+            "week": "Week 10",
+            "beg": "05/06/2023",
+            "end": "11/06/2023"
+        },
+        {
+            "key": "1550e867-5d38-4a93-816f-6c12d8e9a48a",
+            "week": "Week 11",
+            "beg": "12/06/2023",
+            "end": "18/06/2023"
+        },
+        {
+            "key": "b9a4eebd-6f4a-4c20-8eef-d8246fc6aba7",
+            "week": "Week 12",
+            "beg": "19/06/2023",
+            "end": "25/06/2023"
+        },
+        {
+            "key": "d69ceac4-6cbe-4f15-8ce1-611081fd057a",
+            "week": "Week 13",
+            "beg": "26/06/2023",
+            "end": "02/07/2023"
+        },
+        {
+            "key": "19f2cb5a-6593-49a3-9bee-afd78163c09c",
+            "week": "Week 14",
+            "beg": "03/07/2023",
+            "end": "09/07/2023"
+        },
+        {
+            "key": "39825baf-fc38-4de3-ab17-aeb4f5a067cb",
+            "week": "Week 15",
+            "beg": "10/07/2023",
+            "end": "16/07/2023"
+        },
+        {
+            "key": "e0d89a23-2979-4ee3-b865-f22d937de9b2",
+            "week": "Week 16",
+            "beg": "17/07/2023",
+            "end": "23/07/2023"
+        }
+    ],
+    "categories": {
+        "groups": [
+            { "key": "f662762e-711a-4321-bb27-0555665feff8", "name": "Work" },
+            { "key": "057b3320-b6d5-426d-a4f9-2f18105e7533", "name": "Home" },
+            {
+                "key": "c2e2f3c4-5b6d-47e9-8b2c-0442dabf4412",
+                "name": "Lithuania"
+            }
+        ],
+        "categories": [
+            {
+                "key": "b3ffe5a1-4b5c-441a-b27c-c3b4efb2df4d",
+                "name": "Petrol",
+                "group": "Work"
+            },
+            {
+                "key": "39ea63f4-1409-4f95-ad38-1aee55c97adc",
+                "name": "Car",
+                "group": "Work"
+            },
+            {
+                "key": "bdf09798-4237-48f5-9430-01ed3c027c4b",
+                "name": "Car Wash",
+                "group": "Work"
+            },
+            {
+                "key": "4313040e-ecf1-4678-a2a7-8fc9ccf3bf8b",
+                "name": "Work Uniform",
+                "group": "Work"
+            },
+            {
+                "key": "670824a9-d6c6-4c98-8ee5-5930fb5dec80",
+                "name": "Hawk Express",
+                "group": "Work"
+            },
+            {
+                "key": "4d1e92db-fb8e-4759-a146-cff0c20414d2",
+                "name": "Tesco",
+                "group": "Home"
+            },
+            {
+                "key": "3d8dca2e-adaf-4506-aa83-701a7dd149c7",
+                "name": "Lidl",
+                "group": "Home"
+            },
+            {
+                "key": "1a44bb8d-5483-4430-a1ab-3ad1ae412b71",
+                "name": "Iceland",
+                "group": "Home"
+            },
+            {
+                "key": "8e68f4ae-b767-4878-94a9-dccb4f58336a",
+                "name": "Sainsburys",
+                "group": "Home"
+            },
+            {
+                "key": "551d54d7-7d4e-4066-b06a-a0ad4c566f75",
+                "name": "Aldi",
+                "group": "Home"
+            },
+            {
+                "key": "ff1cbd6e-91ff-4d6d-939a-305a67f39374",
+                "name": "Biletai",
+                "group": "Lithuania"
+            },
+            {
+                "key": "4011ae17-89ce-46f0-98e0-82f2e66b7beb",
+                "name": "Mamai",
+                "group": "Lithuania"
+            },
+            {
+                "key": "4293542d-c4c5-468a-992e-e676b3106015",
+                "name": "Kavines",
+                "group": "Lithuania"
+            },
+            {
+                "key": "2cfef420-d1e1-4212-927b-cf666a12b114",
+                "name": "Kuras",
+                "group": "Lithuania"
+            },
+            {
+                "key": "48ad9690-1fda-43c9-956c-00b175c33f54",
+                "name": "Pramogos",
+                "group": "Lithuania"
+            },
+            {
+                "key": "c2610faa-57c3-494f-8cca-0be5ae3a3397",
+                "name": "Rubai",
+                "group": "Lithuania"
+            },
+            {
+                "key": "db81a99e-ca27-459f-87d2-1d0571fd0f96",
+                "name": "Katinui",
+                "group": "Lithuania"
+            },
+            {
+                "key": "dbbc2aff-bdab-46ff-bdef-54fc87b32a01",
+                "name": "Kiti Reikalai",
+                "group": "Lithuania"
+            },
+            {
+                "key": "31f87c65-686c-4d07-9d16-f6e881f9498c",
+                "name": "TK-Maxx",
+                "group": "Home"
+            },
+            {
+                "key": "c4142c04-4fc2-4b9d-82e4-ef2e32d9c225",
+                "name": "Other (Food)",
+                "group": "Home"
+            },
+            {
+                "key": "d6577c40-570b-43dd-8319-73ba20468798",
+                "name": "Other (Things)",
+                "group": "Home"
+            },
+            {
+                "key": "747e2423-815d-43bd-b816-3723903c4119",
+                "name": "Take Away",
+                "group": "Home"
+            },
+            {
+                "key": "6d4aef24-53d1-4cd1-bb53-057d7f4dbf48",
+                "name": "Aivaras",
+                "group": "Home"
+            },
+            {
+                "key": "861023fe-6daf-4ee5-affc-ac27d6b8ed89",
+                "name": "Online Shop",
+                "group": "Home"
+            },
+            {
+                "key": "73695b1e-a7fe-4f47-bfb8-ec7cb7d1652d",
+                "name": "Nikai",
+                "group": "Home"
+            },
+            {
+                "key": "a50e7878-1900-45b4-a20a-ccaaa2c37825",
+                "name": "Bills",
+                "group": "Home"
+            }
+        ]
+    }
+}

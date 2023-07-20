@@ -1,11 +1,13 @@
-import SVGHome from "./Home";
-import SVGDollar from "./Dollar";
-import SVGBarChart from "./BarChart";
-import SVGCog from "./Cog";
-import SVGEuro from "./Euro";
-import SVGGBP from "./GBP";
-import SVGLeftArrowKey from "./LeftArrowKey";
-import SVGRightArrowKey from "./RightArrowKey";
+import SVGHome from "./SVGHome";
+import SVGDollar from "./SVGDollar";
+import SVGBarChart from "./SVGBarChart";
+import SVGCog from "./SVGCog";
+import SVGEuro from "./SVGEuro";
+import SVGGBP from "./SVGGBP";
+import SVGLeftArrowKey from "./SVGLeftArrowKey";
+import SVGRightArrowKey from "./SVGRightArrowKey";
+import SVGClose from "./SVGClose";
+import SVGCheck from "./SVGCheck";
 
 export {
 	SVGHome,
@@ -16,4 +18,6 @@ export {
 	SVGGBP,
 	SVGLeftArrowKey,
 	SVGRightArrowKey,
+	SVGClose,
+	SVGCheck,
 };
