@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { SVGAddBox, SVGEuro, SVGGBP } from "../Icons";
 import { CategorySelector, WeekSelector } from "../Components";
 
-function Home({ data, reRoute }) {
+function Home({ data, reRoute, setPayments }) {
     const svgFill = "white";
     const svgSize = "100%";
 
@@ -39,9 +40,20 @@ function Home({ data, reRoute }) {
 
     const addPayment = () => {
         if (canAddPayment) {
-            console.log(
-                `${currency}${fixedAmount} was paid for ${selectedCategory} from the ${selectedGroup} group during ${data.weeks[selectedWeek].week}`,
-            );
+            let week = data.weeks[selectedWeek].week;
+            setPayments((currentPayments) => {
+                return [
+                    ...currentPayments,
+                    {
+                        key: uuidv4(),
+                        currency: currency,
+                        amount: fixedAmount,
+                        category: selectedCategory,
+                        group: selectedGroup,
+                        week: week,
+                    },
+                ];
+            });
         }
     };
 

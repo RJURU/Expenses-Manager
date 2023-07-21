@@ -128,7 +128,13 @@ function App() {
                     page == "Options" ? "py-6" : ""
                 } ${page == "Payments" || page == "Stats" ? "pt-6" : ""}`}
             >
-                {page == "Home" && <Home data={data} reRoute={setPage} />}
+                {page == "Home" && (
+                    <Home
+                        data={data}
+                        reRoute={setPage}
+                        setPayments={setPayments}
+                    />
+                )}
                 {page == "Payments" && <Payments data={data} />}
                 {page == "Stats" && <Stats data={data} />}
                 {page == "Options" && (
