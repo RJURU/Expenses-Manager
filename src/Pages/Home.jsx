@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { SVGEuro, SVGGBP } from "../Icons";
-import { WeekSelector } from "../Components";
+import { SVGAddBox, SVGEuro, SVGGBP } from "../Icons";
+import { CategorySelector, WeekSelector } from "../Components";
 
-function Home({ data }) {
+function Home({ data, reRoute, selectedCat }) {
     const svgFill = "white";
     const svgSize = "100%";
 
@@ -12,9 +12,28 @@ function Home({ data }) {
     const [currency, setCurrency] = useState("£");
     const [selectedWeek, setSelectedWeek] = useState(data.weeks.length - 1);
 
+    const [selectedCategory, setSelectedCategory] = useState(() => {
+        if (!data.categories.categories[0]) {
+            return null;
+        }
+        return data.categories.categories[0].name;
+    });
+
+    const checkKey = (e) => {
+        if (e.key === "e" || e.key === "+" || e.key === "-" || e.key === "E") {
+            e.preventDefault();
+        }
+    };
+
     useEffect(() => {
         setFixedAmount(parseFloat(amount).toFixed(2));
     }, [amount]);
+
+    const addPayment = () => {
+        console.log(
+            `&{currency}${fixedAmount} was paid for ${selectedCategory} during ${data.weeks[selectedWeek].week}`,
+        );
+    };
 
     return (
         <div className="flex h-full flex-col justify-center">
@@ -48,11 +67,46 @@ function Home({ data }) {
                         step="0.01"
                         min="0.01"
                         value={amount}
+                        onKeyDown={(e) => checkKey(e)}
                         onChange={(e) => setAmount(e.target.value)}
                         className="block h-12 w-full rounded-lg border border-gray-100 bg-gray-700 p-2.5 text-lg text-white placeholder-gray-400"
                     />
                 </div>
+                {selectedCategory !== null && (
+                    <CategorySelector
+                        data={data}
+                        allOption={false}
+                        func={setSelectedCategory}
+                        selectedCategory={selectedCategory}
+                    />
+                )}
+                {selectedCategory == null && (
+                    <div
+                        className="relative flex h-12 flex-row justify-between rounded-lg border border-gray-100 bg-gray-700 p-2.5 text-sm text-white placeholder-gray-400"
+                        onClick={() => reRoute("Options")}
+                    >
+                        <p className="w-full text-center text-xl font-bold">
+                            Add Categories
+                        </p>
+                        <div className="absolute right-2 top-1/2 translate-y-[-50%] ">
+                            <SVGAddBox fill={"#4ade80"} size={24} />
+                        </div>
+                    </div>
+                )}
                 <WeekSelector data={data} setSelectedWeek={setSelectedWeek} />
+
+                <div className="mx-auto flex w-10/12 flex-col items-center gap-3">
+                    <p
+                        className={`w-full rounded-md bg-green-400 p-2 text-center ${
+                            !selectedCategory || amount == null || amount == ""
+                                ? "pointer-events-none select-none opacity-70"
+                                : ""
+                        }`}
+                        onClick={() => addPayment()}
+                    >
+                        Add Payment
+                    </p>
+                </div>
             </div>
         </div>
     );

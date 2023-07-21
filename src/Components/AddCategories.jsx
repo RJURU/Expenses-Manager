@@ -18,10 +18,11 @@ function AddCategories({ data, setCategories }) {
     const [operation, setOperation] = useState();
     const [deleteKey, setDeleteKey] = useState();
     const [type, setType] = useState();
+    const [deleteName, setDeleteName] = useState();
 
-    const handleDelete = (key, type) => {
+    const handleDelete = (key, type, groupName) => {
         if (type == "group") {
-            deleteCategoryGroup(key);
+            deleteCategoryGroup(key, groupName);
         } else if (type == "category") {
             deleteSubCategory(key);
         }
@@ -30,16 +31,20 @@ function AddCategories({ data, setCategories }) {
         setType();
         setOperation();
         setDeleteMessage();
+        setDeleteName();
     };
 
-    const handleSetDelete = (key, message, type) => {
+    const handleSetDelete = (key, message, type, name) => {
         setDeleteKey(key);
         setType(type);
         setOperation("delete");
-        setDeleteMessage(`Confirming will delete ${message}. Are you sure?`);
+        setDeleteName(name);
+        setDeleteMessage(
+            `Confirming will delete ${message}. Payments linked to this will also be deleted. Are you sure?`,
+        );
         if (type == "group") {
             setDeleteMessage(
-                `Confirming will delete ${message}. Categories will be preserved under the group name, and will be there if you re-add the group. Are you sure?`,
+                `Confirming will delete ${message}. Categories and payments linked to this will also be deleted. Are you sure?`,
             );
         }
         toggleShowDelete(true);
@@ -131,9 +136,14 @@ function AddCategories({ data, setCategories }) {
             );
         });
     };
-    const deleteCategoryGroup = (key) => {
+    const deleteCategoryGroup = (key, groupName) => {
         setCategoryGroups((currentCategoryGroups) => {
             return currentCategoryGroups.filter((group) => group.key !== key);
+        });
+        setSubCategories((currentSubCategories) => {
+            return currentSubCategories.filter(
+                (category) => category.group !== groupName,
+            );
         });
     };
     useEffect(() => {
@@ -210,6 +220,7 @@ function AddCategories({ data, setCategories }) {
                                                     group.key,
                                                     group.name + " group",
                                                     "group",
+                                                    group.name,
                                                 )
                                             }
                                         >
@@ -240,6 +251,7 @@ function AddCategories({ data, setCategories }) {
                                                                             group.name +
                                                                             " group",
                                                                         "category",
+                                                                        group.name,
                                                                     )
                                                                 }
                                                             >
@@ -263,13 +275,14 @@ function AddCategories({ data, setCategories }) {
                 })}
             </div>
             <ConfirmationPopUp
-                showPopUP={showDelete}
+                showPopUp={showDelete}
                 toggleShowPopUp={toggleShowDelete}
                 targetKey={deleteKey}
                 func={handleDelete}
                 type={type}
                 message={deleteMessage}
                 opperation={operation}
+                groupName={deleteName}
             />
         </>
     );

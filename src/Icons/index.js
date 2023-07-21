@@ -8,16 +8,20 @@ import SVGLeftArrowKey from "./SVGLeftArrowKey";
 import SVGRightArrowKey from "./SVGRightArrowKey";
 import SVGClose from "./SVGClose";
 import SVGCheck from "./SVGCheck";
+import SVGDropdown from "./SVGDropdown";
+import SVGAddBox from "./SVGAddBox";
 
 export {
-	SVGHome,
-	SVGDollar,
-	SVGBarChart,
-	SVGCog,
-	SVGEuro,
-	SVGGBP,
-	SVGLeftArrowKey,
-	SVGRightArrowKey,
-	SVGClose,
-	SVGCheck,
+    SVGHome,
+    SVGDollar,
+    SVGBarChart,
+    SVGCog,
+    SVGEuro,
+    SVGGBP,
+    SVGLeftArrowKey,
+    SVGRightArrowKey,
+    SVGClose,
+    SVGCheck,
+    SVGDropdown,
+    SVGAddBox,
 };

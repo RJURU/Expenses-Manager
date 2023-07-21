@@ -83,6 +83,14 @@ function App() {
         var tempData = JSON.parse(storedData);
         return tempData.categories;
     });
+    const [payments, setPayments] = useState(() => {
+        const storedData = localStorage.getItem("RJ_Expenses_Manager_Data");
+        if (storedData == null || storedData == {}) {
+            return [];
+        }
+        var tempData = JSON.parse(storedData);
+        return tempData.payments;
+    });
     const [data, updateData] = useState(() => {
         const storedData = localStorage.getItem("RJ_Expenses_Manager_Data");
         if (storedData == null || storedData == {}) {
@@ -102,10 +110,11 @@ function App() {
         let dataNew = {
             weeks: weeks,
             categories: categories,
+            payments: payments,
             options: options,
         };
         updateData(dataNew);
-    }, [weeks, categories, options]);
+    }, [weeks, categories, payments, options]);
 
     useEffect(() => {
         localStorage.setItem("RJ_Expenses_Manager_Data", JSON.stringify(data));
@@ -119,7 +128,7 @@ function App() {
                     page == "Options" ? "py-6" : ""
                 } ${page == "Payments" || page == "Stats" ? "pt-6" : ""}`}
             >
-                {page == "Home" && <Home data={data} />}
+                {page == "Home" && <Home data={data} reRoute={setPage} />}
                 {page == "Payments" && <Payments data={data} />}
                 {page == "Stats" && <Stats data={data} />}
                 {page == "Options" && (
@@ -131,7 +140,7 @@ function App() {
                     />
                 )}
             </div>
-            <Footer setPage={setPage} />
+            <Footer setPage={setPage} page={page} />
         </>
     );
 }

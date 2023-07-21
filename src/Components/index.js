@@ -6,6 +6,8 @@ import WeekSelector from "./WeekSelector";
 import DatePicker from "./DatePicker";
 import ConfirmationPopUp from "./ConfirmationPopUp";
 import ExchangeRate from "./ExchangeRate";
+import CategorySelector from "./CategorySelector";
+import SelectorPopUp from "./SelectorPopUp";
 
 export {
     Footer,
@@ -16,4 +18,6 @@ export {
     DatePicker,
     ConfirmationPopUp,
     ExchangeRate,
+    CategorySelector,
+    SelectorPopUp,
 };

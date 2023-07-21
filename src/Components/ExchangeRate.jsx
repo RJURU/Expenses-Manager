@@ -29,7 +29,6 @@ function ExchangeRate({ data, func }) {
                         className="h-12 w-full min-w-[60px] rounded-lg border border-gray-100 bg-gray-700 p-2.5 text-center text-lg text-white placeholder-gray-400"
                     />
                 </div>
-
                 <div className="mx-auto flex w-10/12 flex-col items-center gap-3">
                     <p
                         className={`w-full rounded-md bg-green-400 p-2 text-center`}
