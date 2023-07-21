@@ -18,6 +18,7 @@ function Home({ data, reRoute, selectedCat }) {
         }
         return data.categories.categories[0].name;
     });
+    const [canAddPayment, setCanAddPayment] = useState(false);
 
     const checkKey = (e) => {
         if (e.key === "e" || e.key === "+" || e.key === "-" || e.key === "E") {
@@ -34,6 +35,14 @@ function Home({ data, reRoute, selectedCat }) {
             `&{currency}${fixedAmount} was paid for ${selectedCategory} during ${data.weeks[selectedWeek].week}`,
         );
     };
+
+    useEffect(() => {
+        if (!selectedCategory || amount == null || amount == "") {
+            setCanAddPayment(false);
+        } else {
+            setCanAddPayment(true);
+        }
+    }, [amount, selectedCategory]);
 
     return (
         <div className="flex h-full flex-col justify-center">
@@ -98,7 +107,7 @@ function Home({ data, reRoute, selectedCat }) {
                 <div className="mx-auto flex w-10/12 flex-col items-center gap-3">
                     <p
                         className={`w-full rounded-md bg-green-400 p-2 text-center ${
-                            !selectedCategory || amount == null || amount == ""
+                            !canAddPayment
                                 ? "pointer-events-none select-none opacity-70"
                                 : ""
                         }`}
