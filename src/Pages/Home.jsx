@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { SVGAddBox, SVGEuro, SVGGBP } from "../Icons";
 import { CategorySelector, WeekSelector } from "../Components";
 
-function Home({ data, reRoute, selectedCat }) {
+function Home({ data, reRoute }) {
     const svgFill = "white";
     const svgSize = "100%";
 
@@ -15,8 +15,15 @@ function Home({ data, reRoute, selectedCat }) {
     const [selectedCategory, setSelectedCategory] = useState(() => {
         if (!data.categories.categories[0]) {
             return null;
+        } else {
+            return data.categories.categories[0].name;
         }
-        return data.categories.categories[0].name;
+    });
+    const [selectedGroup, setSelectedGroup] = useState(() => {
+        if (!data.categories.categories[0]) {
+            return null;
+        }
+        return data.categories.categories[0].group;
     });
     const [canAddPayment, setCanAddPayment] = useState(false);
 
@@ -31,9 +38,16 @@ function Home({ data, reRoute, selectedCat }) {
     }, [amount]);
 
     const addPayment = () => {
-        console.log(
-            `&{currency}${fixedAmount} was paid for ${selectedCategory} during ${data.weeks[selectedWeek].week}`,
-        );
+        if (canAddPayment) {
+            console.log(
+                `${currency}${fixedAmount} was paid for ${selectedCategory} from the ${selectedGroup} group during ${data.weeks[selectedWeek].week}`,
+            );
+        }
+    };
+
+    const handleSetSelectedCategory = (cat, group) => {
+        setSelectedCategory(cat);
+        setSelectedGroup(group);
     };
 
     useEffect(() => {
@@ -85,8 +99,9 @@ function Home({ data, reRoute, selectedCat }) {
                     <CategorySelector
                         data={data}
                         allOption={false}
-                        func={setSelectedCategory}
+                        func={handleSetSelectedCategory}
                         selectedCategory={selectedCategory}
+                        selectedGroup={selectedGroup}
                     />
                 )}
                 {selectedCategory == null && (

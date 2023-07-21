@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { SVGDropdown } from "../Icons";
 import SelectorPopUp from "./SelectorPopUp";
 
-function CategorySelector({ data, func, allOption, selectedCategory }) {
-    const [allOpt, toggleAllOpt] = useState(allOption);
-    const [selected, setSelected] = useState(selectedCategory);
+function CategorySelector({
+    data,
+    func,
+    allOption,
+    selectedCategory,
+    selectedGroup,
+}) {
     const [categoriesDropdown, toggleCategoriesDropdown] = useState(false);
-
-    useEffect(() => {
-        func(selected);
-    }, [selected]);
     return (
         <>
             <div
@@ -17,7 +17,7 @@ function CategorySelector({ data, func, allOption, selectedCategory }) {
                 onClick={() => toggleCategoriesDropdown(!categoriesDropdown)}
             >
                 <p className="w-full text-center text-xl font-bold">
-                    {selected}
+                    {selectedCategory}
                 </p>
                 <div className="absolute right-2 top-1/2 translate-y-[-50%]">
                     <SVGDropdown fill={"white"} size={24} />
@@ -26,9 +26,11 @@ function CategorySelector({ data, func, allOption, selectedCategory }) {
             <SelectorPopUp
                 showPopUp={categoriesDropdown}
                 toggleShowPopUp={toggleCategoriesDropdown}
-                func={setSelected}
-                selected={selected}
+                func={func}
+                selected={selectedCategory}
+                selectedGroup={selectedGroup}
                 data={data}
+                allOption={allOption}
             />
         </>
     );
