@@ -7,12 +7,16 @@ function Footer({ page, setPage }) {
     const svgFill = "white";
     const svgSize = "36";
 
+    const handlePageChange = (page) => {
+        setPage(page);
+    };
+
     return (
         <div className="absolute bottom-0 flex h-14 w-full flex-row justify-evenly bg-slate-800">
             <div className="w-full">
                 <p
                     className={` ${navBtn} ${page == "Home" ? disableBtn : ""}`}
-                    onClick={() => setPage("Home")}
+                    onClick={() => handlePageChange("Home")}
                 >
                     <SVGHome fill={svgFill} size={svgSize} />
                 </p>
@@ -22,7 +26,7 @@ function Footer({ page, setPage }) {
                     className={` ${navBtn} ${
                         page == "Payments" ? disableBtn : ""
                     }`}
-                    onClick={() => setPage("Payments")}
+                    onClick={() => handlePageChange("Payments")}
                 >
                     <SVGDollar fill={svgFill} size={svgSize} />
                 </p>
@@ -32,7 +36,7 @@ function Footer({ page, setPage }) {
                     className={` ${navBtn} ${
                         page == "Stats" ? disableBtn : ""
                     }`}
-                    onClick={() => setPage("Stats")}
+                    onClick={() => handlePageChange("Stats")}
                 >
                     <SVGBarChart fill={svgFill} size={svgSize} />
                 </p>
@@ -42,7 +46,7 @@ function Footer({ page, setPage }) {
                     className={`${navBtn} ${
                         page == "Options" ? disableBtn : ""
                     }`}
-                    onClick={() => setPage("Options")}
+                    onClick={() => handlePageChange("Options")}
                 >
                     <SVGCog fill={svgFill} size={svgSize} />
                 </p>

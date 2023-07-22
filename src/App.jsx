@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./index.css";
-import { Footer, Header } from "./Components/index.js";
-import { Home, Payments, Stats, Options } from "./Pages/index.js";
+import { Footer, Header } from "./Components";
+import { Home, Payments, Stats, Options } from "./Pages";
 
 function App() {
     const [page, setPage] = useState("Home");
@@ -126,7 +126,7 @@ function App() {
             <div
                 className={`h-[calc(100%-7rem)] w-screen overflow-y-auto ${
                     page == "Options" ? "py-6" : ""
-                } ${page == "Payments" || page == "Stats" ? "pt-6" : ""}`}
+                } ${page == "Stats" ? "pt-6" : ""}`}
             >
                 {page == "Home" && (
                     <Home
@@ -135,8 +135,15 @@ function App() {
                         setPayments={setPayments}
                     />
                 )}
-                {page == "Payments" && <Payments data={data} />}
-                {page == "Stats" && <Stats data={data} />}
+                {page == "Payments" && (
+                    <Payments
+                        data={data}
+                        reRoute={setPage}
+                        setPayments={setPayments}
+                        payments={payments}
+                    />
+                )}
+                {page == "Stats" && <Stats data={data} reRoute={setPage} />}
                 {page == "Options" && (
                     <Options
                         setCategories={setCategories}

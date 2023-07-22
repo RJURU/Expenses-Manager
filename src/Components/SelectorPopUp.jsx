@@ -51,7 +51,7 @@ function SelectorPopUp({
                         className={`w-full rounded-md p-1 ${
                             selected == "All" ? "bg-green-400" : "bg-slate-600"
                         } `}
-                        onClick={() => handleCategorySelect("All", "All")}
+                        onClick={() => handleCategorySelect("All")}
                     >
                         All
                     </div>

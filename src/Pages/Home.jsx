@@ -55,6 +55,7 @@ function Home({ data, reRoute, setPayments }) {
                 ];
             });
         }
+        setAmount("");
     };
 
     const handleSetSelectedCategory = (cat, group) => {

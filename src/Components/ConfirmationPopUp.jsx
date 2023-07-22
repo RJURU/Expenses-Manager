@@ -18,8 +18,12 @@ function ConfirmationPopUp({
         }
     }, [showPopUp]);
 
-    const handleFunc = (key, func, type = "all", groupName) => {
-        func(key, type, groupName);
+    const handleFunc = (key, func, type, groupName) => {
+        if (!!type) {
+            func(key, type, groupName);
+        } else {
+            func(key);
+        }
     };
 
     return (

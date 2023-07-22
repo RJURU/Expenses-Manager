@@ -39,12 +39,10 @@ function AddCategories({ data, setCategories }) {
         setType(type);
         setOperation("delete");
         setDeleteName(name);
-        setDeleteMessage(
-            `Confirming will delete ${message}. Payments linked to this will also be deleted. Are you sure?`,
-        );
+        setDeleteMessage(`Confirming will delete ${message}. Are you sure?`);
         if (type == "group") {
             setDeleteMessage(
-                `Confirming will delete ${message}. Categories and payments linked to this will also be deleted. Are you sure?`,
+                `Confirming will delete ${message}. Categories linked to this will also be deleted. Are you sure?`,
             );
         }
         toggleShowDelete(true);
@@ -53,25 +51,27 @@ function AddCategories({ data, setCategories }) {
     const handleAddCategory = (group, category) => {
         var fixedGroupName = titleCase(group);
         var fixedCategoryName = titleCase(category);
-        var groupExists = false;
-        var categoryExists = false;
-        for (var i = 0; i < data.categories.groups.length; i++) {
-            if (data.categories.groups[i].name === fixedGroupName) {
-                groupExists = true;
+        if (fixedGroupName !== "" && fixedCategoryName !== "") {
+            var groupExists = false;
+            var categoryExists = false;
+            for (var i = 0; i < data.categories.groups.length; i++) {
+                if (data.categories.groups[i].name === fixedGroupName) {
+                    groupExists = true;
+                }
             }
-        }
-        for (var i = 0; i < data.categories.categories.length; i++) {
-            if (data.categories.categories[i].name === fixedCategoryName) {
-                categoryExists = true;
+            for (var i = 0; i < data.categories.categories.length; i++) {
+                if (data.categories.categories[i].name === fixedCategoryName) {
+                    categoryExists = true;
+                }
             }
-        }
-        if (!groupExists) {
-            handleAddCategoryGroup(fixedGroupName);
-            handleAddSubCategory(fixedCategoryName, fixedGroupName);
-        } else if (!categoryExists) {
-            handleAddSubCategory(fixedCategoryName, fixedGroupName);
-        } else {
-            return;
+            if (!groupExists) {
+                handleAddCategoryGroup(fixedGroupName);
+                handleAddSubCategory(fixedCategoryName, fixedGroupName);
+            } else if (!categoryExists) {
+                handleAddSubCategory(fixedCategoryName, fixedGroupName);
+            } else {
+                return;
+            }
         }
     };
 
@@ -80,7 +80,6 @@ function AddCategories({ data, setCategories }) {
     }, [categoryGroups, subCategories]);
 
     const handleAddCategoryGroup = (groupName) => {
-        console.log(groupName);
         if (categoryGroup !== "" || categoryGroup !== null) {
             setCategoryGroups((currentMainCategories) => {
                 return [
@@ -92,8 +91,6 @@ function AddCategories({ data, setCategories }) {
         setCategoryGroup("");
     };
     const handleAddSubCategory = (categoryName, groupName) => {
-        console.log(categoryName);
-        console.log(groupName);
         setSubCategories((currentSubCategories) => {
             return [
                 ...currentSubCategories,
@@ -108,19 +105,20 @@ function AddCategories({ data, setCategories }) {
     };
 
     function titleCase(str) {
-        var splitStr = str.split(" ");
+        var newStr = str.trim();
+        var splitStr = newStr.split(" ");
         for (var i = 0; i < splitStr.length; i++) {
             if (splitStr[i].charAt(0) == "(") {
-                splitStr[i].toLowerCase().trim();
+                splitStr[i].toLowerCase();
                 splitStr[i] =
                     splitStr[i].charAt(0) +
                     splitStr[i].charAt(1).toUpperCase() +
                     splitStr[i].substring(2);
             } else if (splitStr[i].charAt(0) == ".") {
-                splitStr[i].trim();
+                splitStr[i];
                 splitStr[i] = splitStr[i].charAt(1) + splitStr[i].substring(2);
             } else {
-                splitStr[i].toLowerCase().trim();
+                splitStr[i].toLowerCase();
                 splitStr[i] =
                     splitStr[i].charAt(0).toUpperCase() +
                     splitStr[i].substring(1);
@@ -178,7 +176,8 @@ function AddCategories({ data, setCategories }) {
                 <div className="mx-auto flex w-10/12 flex-col items-center gap-3">
                     <p
                         className={`w-full rounded-md bg-green-400 p-2 text-center ${
-                            categoryGroup == "" || subCategory == ""
+                            categoryGroup.trim() == "" ||
+                            subCategory.trim() == ""
                                 ? "pointer-events-none select-none opacity-70"
                                 : ""
                         }`}
