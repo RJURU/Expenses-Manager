@@ -31,6 +31,7 @@ const FileInput = ({ setSelectedFileData }) => {
             file:text-sm file:font-semibold
             file:text-white hover:file:bg-blue-500"
             type="file"
+            accept=".json,application/json"
             onChange={onChange}
         ></input>
     );
