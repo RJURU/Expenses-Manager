@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SVGHome, SVGDollar, SVGBarChart, SVGCog } from "../Icons";
 
 function Footer({ page, setPage }) {
-    const navBtn = "w-full p-2.5 block flex flex-row justify-center";
+    const navBtn = "w-full p-2.5 flex flex-row justify-center";
     const disableBtn = "bg-green-400 select-none";
     const svgFill = "white";
     const svgSize = "36";

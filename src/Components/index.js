@@ -8,6 +8,10 @@ import ConfirmationPopUp from "./ConfirmationPopUp";
 import ExchangeRate from "./ExchangeRate";
 import CategorySelector from "./CategorySelector";
 import SelectorPopUp from "./SelectorPopUp";
+import DataManager from "./DataManager";
+import FileInput from "./FileInput";
+import ManageDataPopUp from "./ManageDataPopUp";
+import DataVisualizer from "./DataVisualizer";
 
 export {
     Footer,
@@ -20,4 +24,8 @@ export {
     ExchangeRate,
     CategorySelector,
     SelectorPopUp,
+    DataManager,
+    FileInput,
+    ManageDataPopUp,
+    DataVisualizer,
 };

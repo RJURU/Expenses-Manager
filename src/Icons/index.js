@@ -10,6 +10,8 @@ import SVGClose from "./SVGClose";
 import SVGCheck from "./SVGCheck";
 import SVGDropdown from "./SVGDropdown";
 import SVGAddBox from "./SVGAddBox";
+import SVGDownload from "./SVGDownload";
+import SVGUpload from "./SVGUpload";
 
 export {
     SVGHome,
@@ -24,4 +26,6 @@ export {
     SVGCheck,
     SVGDropdown,
     SVGAddBox,
+    SVGDownload,
+    SVGUpload,
 };
