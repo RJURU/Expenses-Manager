@@ -133,7 +133,10 @@ function Stats({ data }) {
                         }
                     }
                     return (
-                        <div className="flex w-full flex-col gap-3 rounded-md bg-slate-800 p-2">
+                        <div
+                            key={group.key}
+                            className="flex w-full flex-col gap-3 rounded-md bg-slate-800 p-2"
+                        >
                             <p className="text-center text-xl uppercase">
                                 {group.name}
                             </p>
@@ -177,7 +180,10 @@ function Stats({ data }) {
                                 }
                                 if (category.group == group.name) {
                                     return (
-                                        <div className="flex flex-row gap-3">
+                                        <div
+                                            key={category.key}
+                                            className="flex flex-row gap-3"
+                                        >
                                             <div className="flex w-6/12 items-center">
                                                 <p className="w-full text-center text-sm">
                                                     {category.name}
