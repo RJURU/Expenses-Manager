@@ -18,32 +18,11 @@ function Payments({ data, reRoute, setPayments, payments }) {
         }
         return data.categories.categories[0].group;
     });
-    const [newPayments, setNewPayments] = useState(data.payments);
-    const [noPayments, toggleNoPayments] = useState(false);
     const handleSetSelectedCategory = (cat, group) => {
         setSelectedCategory(cat);
         setSelectedGroup(group);
     };
     const [openNote, setOpenNote] = useState();
-
-    const updateNewPayments = () => {
-        if (selectedCategory == "All") {
-            setNewPayments(newPayments);
-        } else {
-            newPayments = newPayments.filter(
-                (payment) => payment.group == selectedGroup,
-            );
-            newPayments = newPayments.filter(
-                (payment) => payment.category == selectedCategory,
-            );
-        }
-        if (newPayments.length == 0) {
-            toggleNoPayments(true);
-        } else {
-            toggleNoPayments(false);
-        }
-        setNewPayments(newPayments);
-    };
 
     const handleSetOpenNote = (e) => {
         if (e == openNote) {
